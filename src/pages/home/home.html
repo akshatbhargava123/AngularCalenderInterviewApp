@@ -1,14 +1,37 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Calender - Jan - 2018</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+  <ion-searchbar (ionInput)="getItems($event)" placeholder="Filter by user" animated="true"></ion-searchbar>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let day of calender.days" col-lg-1 text-capitalize text-center><b>{{ day }}day</b></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let week of [0,1,2,3,4]; let i=index">
+      <ion-col *ngFor="let day of [0,1,2,3,4,5,6]" col-lg-1 [ngClass]="{
+        'highPriority': calender.monthsData[0][week][day].task?.priority == 'high',
+        'medPriority': calender.monthsData[0][week][day].task?.priority == 'med',
+        'noPriority': calender.monthsData[0][week][day].task?.priority == 'def'
+      }">
+        <div *ngIf="calender.monthsData[0][week][day].exists == true else nil" text-center>
+          <h3>{{ week * 7 + day }}</h3>
+          <p *ngIf="calender.monthsData[0][week][day].task != null else noEvent">
+            ({{ calender.monthsData[0][week][day].task.name }} - {{ calender.monthsData[0][week][day].task.userName }})
+          </p>
+          <ng-template #noEvent>
+            (no task)
+          </ng-template>
+        </div>
+        <ng-template #nil>
+          <div text-center>---</div>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

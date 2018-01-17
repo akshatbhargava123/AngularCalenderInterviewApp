@@ -1,3 +1,18 @@
 page-home {
+    .col {
+        border-style: ridge;
+        border-color: lightblue;
+    }
 
+    .highPriority {
+        background: red;
+    }
+
+    .medPriority {
+        background: yellow;
+    }
+
+    .noPriority {
+        background: lightskyblue;
+    }
 }
